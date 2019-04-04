@@ -10,3 +10,6 @@
 ## progress
 #### 4/2 
 - designed login main layout
+
+#### 4/5
+- fixed main page layout
