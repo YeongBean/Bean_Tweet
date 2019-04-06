@@ -24,9 +24,9 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle mt=10" id="dropdown" data-toggle="dropdown">Member Menu</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item" href="#">Sign in</a>
-						<a class="dropdown-item" href="#">Sign up</a>
-						<a class="dropdown-item" href="#">Sign out</a>
+						<a class="dropdown-item" href="loginPage.jsp">Sign in</a>
+						<a class="dropdown-item" href="joinPage.jsp">Sign up</a>
+						<a class="dropdown-item" href="logoutPage.jsp">Sign out</a>
 					</div>
 				</li>								
 			</ul>
