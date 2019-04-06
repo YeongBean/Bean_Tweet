@@ -13,3 +13,6 @@
 
 #### 4/5
 - fixed main page layout
+
+#### 4/6
+- update login sources (DAO, DTO, some utils)
