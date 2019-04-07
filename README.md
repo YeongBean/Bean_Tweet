@@ -16,3 +16,6 @@
 
 #### 4/6
 - update login sources (DAO, DTO, some utils)
+
+#### 4/7
+- sign up system & authentiaction system using email
