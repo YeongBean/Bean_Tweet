@@ -91,7 +91,7 @@
 				</div>
 				<div class="modal-body">
 				<!-- content details -->
-					<form action="./evaluationRegisterAction.jsp" method="post">
+					<form action="./tweetRegisterAction.jsp" method="post">
 						<div class="form-row">
 							<div class="form-group col-sm-12">
 								<label>Title</label>

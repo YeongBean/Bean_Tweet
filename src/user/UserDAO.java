@@ -45,7 +45,7 @@ public class UserDAO {
 	
 	public int join(UserDTO user)
 	{
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, flase)";
+		String SQL = "INSERT INTO USER VALUES (?,?,?,?,false)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -56,6 +56,7 @@ public class UserDAO {
 			pstmt.setString(2, user.getUserPassword());
 			pstmt.setString(3, user.getUserEmail());
 			pstmt.setString(4, user.getUserEmailHash());
+			System.out.println(true);
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

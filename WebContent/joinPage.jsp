@@ -18,14 +18,14 @@
 		</button>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="index.jsp">Main</a>					
 				</li>				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle mt=10" id="dropdown" data-toggle="dropdown">Member Menu</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
 						<a class="dropdown-item" href="loginPage.jsp">Sign in</a>
-						<a class="dropdown-item" href="joinPage.jsp">Sign up</a>
+						<a class="dropdown-item active" href="joinPage.jsp">Sign up</a>
 						<a class="dropdown-item" href="logoutPage.jsp">Sign out</a>
 					</div>
 				</li>								
