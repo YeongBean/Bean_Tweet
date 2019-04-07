@@ -6,6 +6,7 @@
 - Window10
 - JSP
 - MySQL 5.7
+- Tomcat 8.5
 
 ## progress
 #### 4/2 
