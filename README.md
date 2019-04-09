@@ -6,6 +6,7 @@
 - Window10
 - JSP
 - MySQL 5.7
+- Tomcat 8.5
 
 ## progress
 #### 4/2 
@@ -16,3 +17,6 @@
 
 #### 4/6
 - update login sources (DAO, DTO, some utils)
+
+#### 4/7
+- sign up system & authentiaction system using email
