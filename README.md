@@ -5,7 +5,7 @@
 ### Develop enviornment
 - Window10
 - JSP
-- MySQL 5.7
+- MySQL 5.7 -> MySQL 8.0 (Since unexpected error)
 - Tomcat 8.5
 
 ## progress
