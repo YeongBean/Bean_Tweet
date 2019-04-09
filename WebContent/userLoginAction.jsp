@@ -7,22 +7,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String userID = null;
-	if(session.getAttribute("userID") != null)
-	{
-		userID = (String)session.getAttribute("userID");
-	}
-	if(userID != null)
-	{
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('Already sign in now');");
-		script.println("location.href = 'index.jsp';");
-		script.println("</script>");
-		script.close();
-		return;
-}
 	String userPassword = null;
-	String userEmail = null;
 	if(request.getParameter("userID") != null)
 	{
 		userID = request.getParameter("userID");
@@ -31,12 +16,9 @@
 	{
 		userPassword = request.getParameter("userPassword");
 	}
-	if(request.getParameter("userEmail") != null)
-	{
-		userEmail = request.getParameter("userEmail");
-	}
+
 	
-	if(userID == null || userPassword == null || userEmail == null || userID.equals("") || userEmail.equals("") || userPassword.equals(""))
+	if(userID == null || userPassword == null)
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -48,22 +30,37 @@
 	}
 	
 	UserDAO userDAO = new UserDAO();
-	UserDTO userDTO = new UserDTO(userID, userPassword, userEmail, SHA256.getSHA256(userEmail), false);
-	int result = userDAO.join(userDTO);	
-	if( result == -1)
+	int result = userDAO.login(userID, userPassword);
+	if( result == 1) //log in success
 	{
+		session.setAttribute("userID", userID);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('Already existing ID');");
+		script.println("location.href = 'index.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}else if (result == 0){ //wrong password
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('Wrong password!');");
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();
 		return;
-	}else	{
-		session.setAttribute("userID", userID);
+	}else if (result == -1){ //wrong password
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href = 'emailSendAction.jsp'");
+		script.println("alert('No user information');");
+		script.println("history.back();");
+		script.println("</script>");
+		script.close();
+		return;
+	}else if (result == -2){ //wrong password
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('Database error');");
+		script.println("history.back();");
 		script.println("</script>");
 		script.close();
 		return;

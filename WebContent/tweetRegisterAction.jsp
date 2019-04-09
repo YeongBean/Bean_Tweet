@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="user.UserDTO"%>
-<%@ page import="user.UserDAO"%>
+<%@ page import="tweet.TweetDTO"%>
+<%@ page import="tweet.TweetDAO"%>
 <%@ page import="util.SHA256"%>
 <%@ page import="java.io.PrintWriter"%>
 
@@ -11,32 +11,37 @@
 	{
 		userID = (String)session.getAttribute("userID");
 	}
-	if(userID != null)
+	if(userID == null)
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('Already sign in now');");
-		script.println("location.href = 'index.jsp';");
+		script.println("alert('Please sign in first');");
+		script.println("location.href = 'loginPage.jsp';");
 		script.println("</script>");
 		script.close();
 		return;
-}
-	String userPassword = null;
-	String userEmail = null;
-	if(request.getParameter("userID") != null)
-	{
-		userID = request.getParameter("userID");
-	}
-	if(request.getParameter("userPassword") != null)
-	{
-		userPassword = request.getParameter("userPassword");
-	}
-	if(request.getParameter("userEmail") != null)
-	{
-		userEmail = request.getParameter("userEmail");
 	}
 	
-	if(userID == null || userPassword == null || userEmail == null || userID.equals("") || userEmail.equals("") || userPassword.equals(""))
+	String tweetTitle = null;
+	String tweetContent = null;
+	String tweetMood = null;
+	
+	String userPassword = null;
+	String userEmail = null;
+	if(request.getParameter("tweetTitle") != null)
+	{
+		tweetTitle = request.getParameter("tweetTitle");
+	}
+	if(request.getParameter("tweetContent") != null)
+	{
+		tweetContent = request.getParameter("tweetContent");
+	}
+	if(request.getParameter("tweetMood") != null)
+	{
+		tweetMood = request.getParameter("tweetMood");
+	}
+	
+	if(tweetTitle == null || tweetContent == null || tweetMood == null || tweetTitle.equals("") || tweetContent.equals(""))
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -47,14 +52,14 @@
 		return;
 	}
 	
-	UserDAO userDAO = new UserDAO();
-	UserDTO userDTO = new UserDTO(userID, userPassword, userEmail, SHA256.getSHA256(userEmail), false);
-	int result = userDAO.join(userDTO);	
+	TweetDAO tweetDAO = new TweetDAO();
+	TweetDTO tweetDTO = new TweetDTO(0, userID, tweetTitle, tweetContent, tweetMood, 0);
+	int result = tweetDAO.write(tweetDTO);
 	if( result == -1)
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('Already existing ID');");
+		script.println("alert('Failed to post...');");
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();
@@ -63,7 +68,7 @@
 		session.setAttribute("userID", userID);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href = 'emailSendAction.jsp'");
+		script.println("location.href = 'index.jsp'");
 		script.println("</script>");
 		script.close();
 		return;

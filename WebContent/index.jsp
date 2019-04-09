@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,33 @@
 	<link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
+<%
+	String userID = null;
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String)session.getAttribute("userID");
+	}
+	if(userID == null)
+	{
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('Please sign in first');");
+		script.println("location.href = 'loginPage.jsp';");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	boolean emailChecked = new UserDAO().getUserEmailChecked(userID);
+	if(emailChecked == false)
+	{
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("location.href = 'emailSendConfirm.jsp';");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+ %>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">LittleBEAN Tweet</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
@@ -24,14 +53,27 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle mt=10" id="dropdown" data-toggle="dropdown">Member Menu</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
+					
+<%
+	if(userID == null)
+	{
+%>
+					
 						<a class="dropdown-item" href="loginPage.jsp">Sign in</a>
 						<a class="dropdown-item" href="joinPage.jsp">Sign up</a>
+<%
+	} else {
+%>
+						
 						<a class="dropdown-item" href="logoutPage.jsp">Sign out</a>
+<%
+	}
+%>
 					</div>
 				</li>								
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" plceholder="Enter some contents" aria-label="Search">
+			<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
@@ -95,7 +137,7 @@
 						<div class="form-row">
 							<div class="form-group col-sm-12">
 								<label>Title</label>
-								<input type="text" name="tweetName" class = "form-control" maxlength="40">								
+								<input type="text" name="tweetTitle" class = "form-control" maxlength="40">								
 							</div>
 						</div>
 						<div class="form-row">
@@ -103,10 +145,10 @@
 							<label>Mood</label>
 							</div>
 							<div class="form-group col-sm-8">
-							<select name="mood" class="form-control">
-								<option value="Happy">Happy</option>
+							<select name="tweetMood" class="form-control">
+								<option value="Happy" >Happy</option>
 								<option value="Sad">Sad</option>
-								<option value="Angry">Angry</option>
+								<option value="Angry" selected>Angry</option>
 								<option value="Normal">Normal</option>
 							</select>
 							</div>
@@ -141,7 +183,7 @@
 						<div class="form-row">
 							<div class="form-group col-sm-12">
 								<label>Title</label>
-								<input type="text" name="reportName" class = "form-control" maxlength="40">								
+								<input type="text" name="reportTitle" class = "form-control" maxlength="40">								
 							</div>
 						</div>						
 						<div class="form-group">

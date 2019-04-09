@@ -18,12 +18,12 @@
 	{
 		userID = (String)session.getAttribute("userID");
 	}
-	if(userID != null)
+	if(userID == null)
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('Already sign in now');");
-		script.println("location.href = 'index.jsp';");
+		script.println("alert('Please sign in first');");
+		script.println("location.href = 'loginPage.jsp';");
 		script.println("</script>");
 		script.close();
 		return;
@@ -68,17 +68,10 @@
 		</div>
 	</nav>
 	<section class="container mt-5" style="max-width: 560px;">
-		<form method="post" action="./userLoginAction.jsp">
-			<div class="form-group">
-				<label>ID</label>
-				<input type="text" name="userID" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>PW</label>
-				<input type="password" name="userPassword" class="form-control">				
-			</div>			
-			<button type="submit" class="btn btn-primary">Sign In</button>
-		</form>
+		<div class="alert alert-warning mt-4" role="alert">
+			You can use service after email authentication. Didn't you received email?
+		</div>
+		<a href="emailSendAction.jsp" class="btn btn=primary">Resend Email</a>
 	</section>	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2019 LittleBEAN All Rights Reserved.

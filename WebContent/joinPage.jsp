@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,23 @@
 	<link rel="stylesheet" href="./css/custom.css">
 </head>
 <body>
+<%
+	String userID = null;
+	if(session.getAttribute("userID") != null)
+	{
+		userID = (String)session.getAttribute("userID");
+	}
+	if(userID != null)
+	{
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('Already sign in now');");
+		script.println("location.href = 'index.jsp';");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+ %>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">LittleBEAN Tweet</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
@@ -18,20 +36,33 @@
 		</button>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="index.jsp">Main</a>					
 				</li>				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle mt=10" id="dropdown" data-toggle="dropdown">Member Menu</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
+					
+<%
+	if(userID == null)
+	{
+%>
+					
 						<a class="dropdown-item" href="loginPage.jsp">Sign in</a>
-						<a class="dropdown-item active" href="joinPage.jsp">Sign up</a>
+						<a class="dropdown-item" href="joinPage.jsp">Sign up</a>
+<%
+	} else {
+%>
+						
 						<a class="dropdown-item" href="logoutPage.jsp">Sign out</a>
+<%
+	}
+%>
 					</div>
 				</li>								
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" plceholder="Enter some contents" aria-label="Search">
+				<input class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
