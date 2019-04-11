@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="user.UserDAO" %>
+<%@ page import="tweet.TweetDTO" %>
+<%@ page import="tweet.TweetDAO" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +18,28 @@
 </head>
 <body>
 <%
+	request.setCharacterEncoding("UTF-8");
+	String tweetMood = "All";
+	String searchType = "Current";
+	String search = "";
+	int pagenum = 0;
+	if(request.getParameter("tweetMood") != null){
+		tweetMood = request.getParameter("tweetMood");
+	}
+	if(request.getParameter("searchType") != null){
+		searchType = request.getParameter("searchType");
+	}
+	if(request.getParameter("search") != null){
+		search = request.getParameter("search");
+	}
+	if(request.getParameter("pagenum") != null){
+		try{
+			pagenum = Integer.parseInt(request.getParameter("pagenum"));
+		}catch(Exception e){
+			System.out.println("Search page error");
+		}		
+	}
+	
 	String userID = null;
 	if(session.getAttribute("userID") != null)
 	{
@@ -65,7 +91,7 @@
 	} else {
 %>
 						
-						<a class="dropdown-item" href="logoutPage.jsp">Sign out</a>
+						<a class="dropdown-item" href="userLogoutAction.jsp">Sign out</a>
 <%
 	}
 %>
@@ -80,46 +106,89 @@
 	</nav>
 	<section class="container">
 		<form method="get" action="./index.jsp" class="form-inline mt-3">
-			<select name="tweetDivide" class="form-control mx-1 mt-2">
+			<select name="tweetMood" class="form-control mx-1 mt-2">
 				<option value="All">All</option>
-				<option value="All">Happy</option>
-				<option value="All">Sad</option>
-				<option value="All">Angry</option>
-				<option value="All">Normal</option>
+				<option value="Happy" <% if(tweetMood.equals("Happy")) out.println("selected"); %>>Happy</option>
+				<option value="Sad" <% if(tweetMood.equals("Sad")) out.println("selected"); %>>Sad</option>
+				<option value="Angry" <% if(tweetMood.equals("Angry")) out.println("selected"); %>>Angry</option>
+				<option value="Normal" <% if(tweetMood.equals("Normal")) out.println("selected"); %>>Normal</option>
+			</select>
+			<select name="searchType" class="form-control mx-1 mt-2">
+				<option value="Current" <% if(searchType.equals("Current")) out.println("selected"); %>>Current</option>
+				<option value="Like" <% if(searchType.equals("Like")) out.println("selected"); %>>Like</option>
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="Enter contents">
 			<button class="btn btn-primary mx-1 mt-2" type="submit">Search</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">Post</a>
 			<a class="btn btn-secondary mx-1 mt-2" data-toggle="modal" href="#reportModal">Report</a>
 		</form>
-		
+<%
+	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
+	tweetList = new TweetDAO().getList(tweetMood, searchType, search, pagenum);
+	if(tweetList != null)
+		for(int i = 0; i < tweetList.size(); i++){
+			if(i == 5) break;
+			TweetDTO tweet = tweetList.get(i);
+%>
 		<!-- card -->
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left">This is First tweet&nbsp&nbsp&nbsp&nbsp;<small>LittleBean</small></div>
+				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><%= tweet.getUserID()%></small></div>
 				<div class="col-4 text-right">
-					Mood : <span style="color: blue;">Happy</span>
+					Mood : <span style="color: blue;"><%= tweet.getTweetMood() %></span>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
-			<p class="card-text">This is example tweet content. I dont know what to write</p>
+			<p class="card-text"><%= tweet.getTweetContent()%></p>
 			<div class="row">
 				<div class="col-9 text-left">
-					<span style="color:green;">Like: 1</span>
+					<span style="color:green;">Like:<%= tweet.getLikeCount()%></span>
 				</div>
 				<div class="col-3 text-right">					
-					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?evaluationID=">Delete</a>
-					&nbsp&nbsp&nbsp&nbsp<a onclick="return confirm('Like this tweet?')" href="./likeAction.jsp?evaluationID=">Like</a>
+					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>
+					&nbsp&nbsp&nbsp&nbsp<a onclick="return confirm('Like this tweet?')" href="./likeAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Like</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-
+<%
+		}
+%>
 	</section>
-	
+	<ul class="pagination justify-content-center mt-3">
+		<li class = "page-item">
+<%
+	if(pagenum <= 0){		
+%>
+	<a class="page-link disabled">back</a>
+<%
+	}else{
+%>
+	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
+	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
+	<%= pagenum-1 %>">back</a>
+<%
+	}
+%>
+		</li>
+		<li class = "page-item">
+<%
+	if(tweetList.size() < 6){		
+%>
+	<a class="page-link disabled">next</a>
+<%
+	}else{
+%>
+	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
+	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
+	<%= pagenum+1 %>">next</a>
+<%
+	}
+%>
+		</li>
+	</ul>
 	<!-- modal -->
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">

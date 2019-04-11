@@ -24,3 +24,7 @@
 #### 4/9
 - sign in/out system & post/report tweet system
 - when you use report function, email send to my email
+
+#### 4/11
+- implemented paging & like & delete tweet function
+- fixed some errors
