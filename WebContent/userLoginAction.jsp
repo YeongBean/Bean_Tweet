@@ -30,10 +30,12 @@
 	}
 	
 	UserDAO userDAO = new UserDAO();
+	String userNickname = userDAO.getUsernickname(userID);
 	int result = userDAO.login(userID, userPassword);
 	if( result == 1) //log in success
 	{
 		session.setAttribute("userID", userID);
+		session.setAttribute("userNickname", userNickname);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("location.href = 'index.jsp'");

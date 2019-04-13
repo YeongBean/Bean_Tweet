@@ -6,6 +6,22 @@ public class UserDTO {
 	private String userEmail;
 	private String userEmailHash;
 	private boolean userEmailChecked;
+	private String userProfileImg;
+	private String userNickname;
+	
+	
+	public String getUserProfileImg() {
+		return userProfileImg;
+	}
+	public void setUserProfileImg(String userProfileImg) {
+		this.userProfileImg = userProfileImg;
+	}
+	public String getUserNickname() {
+		return userNickname;
+	}
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
 	public String getUserID() {
 		return userID;
 	}
@@ -42,14 +58,16 @@ public class UserDTO {
 		
 	}
 	
-	public UserDTO(String userID, String userPassword, String userEmail, String userEmailHash,
-			boolean userEmailChecked) {
+	public UserDTO(String userID, String userPassword, String userEmail, String userEmailHash, boolean userEmailChecked,
+			String userProfileImg, String userNickname) {
 		super();
 		this.userID = userID;
 		this.userPassword = userPassword;
 		this.userEmail = userEmail;
 		this.userEmailHash = userEmailHash;
 		this.userEmailChecked = userEmailChecked;
+		this.userProfileImg = userProfileImg;
+		this.userNickname = userNickname;
 	}
 	
 }

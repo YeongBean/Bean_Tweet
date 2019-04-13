@@ -117,9 +117,9 @@
 			</form>
 		</div>
 	</nav>
-	<div class="col-12 text-center mt-3"><font size="18px">MAIN PAGE</font></div>
+	<div class="col-12 text-center mt-3"><font size="18px">HOT PAGE</font></div>
 	<section class="container">
-		<form method="get" action="./index.jsp" class="form-inline">
+		<form method="get" action="./hotPage.jsp" class="form-inline">
 			<select name="tweetMood" class="form-control mx-1 mt-2">
 				<option value="All">All</option>
 				<option value="Happy" <% if(tweetMood.equals("Happy")) out.println("selected"); %>>Happy</option>
@@ -142,7 +142,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
+	tweetList = tweetDAOs.getHotList(tweetMood, searchType, search, pagenum);
 	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
 			if(i == 5) break;
@@ -176,6 +176,7 @@
 <%
 		}
 %>
+
 	</section>
 	<ul class="pagination justify-content-center mt-3">
 		<li class = "page-item">

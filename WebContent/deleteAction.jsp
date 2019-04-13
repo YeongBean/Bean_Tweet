@@ -5,9 +5,9 @@
 <%@ page import="java.io.PrintWriter"%>
 <%
 	String userID = null;
-	if(session.getAttribute("userID") != null)
+	if(session.getAttribute("userNickname") != null)
 	{
-		userID = (String)session.getAttribute("userID");
+		userID = (String)session.getAttribute("userNickname");
 	}
 	if(userID == null)
 	{

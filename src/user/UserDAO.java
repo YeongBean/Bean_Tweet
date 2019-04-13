@@ -45,7 +45,7 @@ public class UserDAO {
 	
 	public int join(UserDTO user)
 	{
-		String SQL = "INSERT INTO USER VALUES (?,?,?,?,false)";
+		String SQL = "INSERT INTO USER VALUES (?,?,?,?,false,'none.jpg',?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -56,6 +56,7 @@ public class UserDAO {
 			pstmt.setString(2, user.getUserPassword());
 			pstmt.setString(3, user.getUserEmail());
 			pstmt.setString(4, user.getUserEmailHash());
+			pstmt.setString(5, user.getUserNickname());
 			System.out.println(true);
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -158,5 +159,35 @@ public class UserDAO {
 			catch(Exception e){ e.printStackTrace();}
 		}
 		return false; // db error
+	}
+	
+	public String getUsernickname(String userID)
+	{
+		String SQL = "SELECT userNickname FROM USER WHERE userID=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return "default"; // db error
 	}
 }

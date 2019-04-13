@@ -23,6 +23,8 @@
 }
 	String userPassword = null;
 	String userEmail = null;
+	String userProfileImg = null;
+	String userNickname = null;
 	if(request.getParameter("userID") != null)
 	{
 		userID = request.getParameter("userID");
@@ -35,8 +37,12 @@
 	{
 		userEmail = request.getParameter("userEmail");
 	}
+	if(request.getParameter("userNickname") != null)
+	{
+		userNickname = request.getParameter("userNickname");
+	}
 	
-	if(userID == null || userPassword == null || userEmail == null || userID.equals("") || userEmail.equals("") || userPassword.equals(""))
+	if(userID == null || userPassword == null || userEmail == null || userNickname == null|| userID.equals("") || userEmail.equals("") || userPassword.equals("") || userNickname.equals(""))
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -48,7 +54,7 @@
 	}
 	
 	UserDAO userDAO = new UserDAO();
-	UserDTO userDTO = new UserDTO(userID, userPassword, userEmail, SHA256.getSHA256(userEmail), false);
+	UserDTO userDTO = new UserDTO(userID, userPassword, userEmail, SHA256.getSHA256(userEmail), false, null, userNickname);
 	int result = userDAO.join(userDTO);	
 	if( result == -1)
 	{

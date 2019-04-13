@@ -10,7 +10,7 @@ import util.DatabaseUtil;
 public class TweetDAO {
 	public int write(TweetDTO tweetDTO)
 	{
-		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,0)";
+		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,0,0)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -52,11 +52,11 @@ public class TweetDAO {
 			if(searchType.contentEquals("Current"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 6;
+						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
 			}else if(searchType.contentEquals("Like"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 6;
+						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
 			}
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -72,7 +72,119 @@ public class TweetDAO {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getInt(6)
+						rs.getInt(6),
+						rs.getInt(7)
+						);
+				tweetList.add(tweet);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return tweetList; 
+	}
+	
+	public ArrayList<TweetDTO> getHotList (String tweetMood, String searchType, String search, int pagenum)
+	{
+		if(tweetMood.equals("All"))
+		{
+			tweetMood = "";
+		}
+		ArrayList<TweetDTO> tweetList = null;
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			if(searchType.contentEquals("Current"))
+			{
+				SQL = "SELECT * FROM TWEETS WHERE likeCount > 9 AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
+						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+			}else if(searchType.contentEquals("Like"))
+			{
+				SQL = "SELECT * FROM TWEETS WHERE likeCount > 9 AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
+						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+			}
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + tweetMood + "%");
+			pstmt.setString(2, "%" + search + "%");
+			rs = pstmt.executeQuery();
+			tweetList = new ArrayList<TweetDTO>();
+			while (rs.next())
+			{
+				TweetDTO tweet = new TweetDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getInt(6),
+						rs.getInt(7)
+						);
+				tweetList.add(tweet);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return tweetList; 
+	}
+	
+	public ArrayList<TweetDTO> getMyList (String tweetMood, String searchType, String search, int pagenum, String userNickname)
+	{
+		if(tweetMood.equals("All"))
+		{
+			tweetMood = "";
+		}
+		ArrayList<TweetDTO> tweetList = null;
+		String SQL = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			if(searchType.contentEquals("Current"))
+			{
+				SQL = "SELECT * FROM TWEETS WHERE userID = ? AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
+						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+			}else if(searchType.contentEquals("Like"))
+			{
+				SQL = "SELECT * FROM TWEETS WHERE userID = ? AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
+						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+			}
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userNickname);
+			pstmt.setString(2, "%" + tweetMood + "%");
+			pstmt.setString(3, "%" + search + "%");
+			rs = pstmt.executeQuery();
+			tweetList = new ArrayList<TweetDTO>();
+			while (rs.next())
+			{
+				TweetDTO tweet = new TweetDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getInt(6),
+						rs.getInt(7)
 						);
 				tweetList.add(tweet);
 			}

@@ -7,9 +7,11 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String userID = null;
+	String userNickname = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String)session.getAttribute("userID");
+		userNickname = (String)session.getAttribute("userNickname");
 	}
 	if(userID == null)
 	{
@@ -28,6 +30,7 @@
 	
 	String userPassword = null;
 	String userEmail = null;
+	
 	if(request.getParameter("tweetTitle") != null)
 	{
 		tweetTitle = request.getParameter("tweetTitle");
@@ -53,7 +56,7 @@
 	}
 	
 	TweetDAO tweetDAO = new TweetDAO();
-	TweetDTO tweetDTO = new TweetDTO(0, userID, tweetTitle, tweetContent, tweetMood, 0);
+	TweetDTO tweetDTO = new TweetDTO(0, userNickname, tweetTitle, tweetContent, tweetMood, 0, 0);
 	int result = tweetDAO.write(tweetDTO);
 	if( result == -1)
 	{

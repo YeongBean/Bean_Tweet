@@ -38,7 +38,10 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" href="index.jsp">Main</a>					
-				</li>				
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="hotPage.jsp">Hot</a>					
+				</li>		
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle mt=10" id="dropdown" data-toggle="dropdown">Member Menu</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
@@ -55,6 +58,7 @@
 %>
 						
 						<a class="dropdown-item" href="userLogoutAction.jsp">Sign out</a>
+						<a class="dropdown-item" href="profile.jsp">Your Profile</a>
 <%
 	}
 %>
@@ -80,6 +84,10 @@
 			<div class="form-group">
 				<label>E-mail</label>
 				<input type="email" name="userEmail" class="form-control">				
+			</div>
+			<div class="form-group">
+				<label>Nickname</label>
+				<input type="text" name="userNickname" class="form-control">				
 			</div>
 			<button type="submit" class="btn btn-primary">Sign Up</button>
 		</form>

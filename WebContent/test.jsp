@@ -1,43 +1,75 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<!DOCTYPE html>
 
-    pageEncoding= "UTF-8"%>
+<html>
 
-<%@ page import="java.sql.*"%>
+<head>
 
- 
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 
-<h2> JDBC드라이버 테스트 </h2>
+        <script>
 
- 
+        $(document).ready(function (event){
 
-<%
+        $(window).scroll(function(){
 
-  Connection conn=null;
+        
 
- 
+        var scrollHeight = $(window).scrollTop() + $(window).height();
 
-  try{
+        var documentHeight = $(document).height();
 
-     
+        
 
-        String jdbcUrl= "jdbc:mysql://localhost:3306/TWEET" ;
-        out.println( "1" );
-        String dbId="root";
-        out.println( "2" );
-        String dbPass= "1234";
-        out.println( "3" );
- 
+        //스크롤이 맨아래로 갔는지 아닌지 확인하는 if문
 
-        Class.forName( "com.mysql.jdbc.Driver");
-        out.println( "4" );
-        conn=DriverManager.getConnection(jdbcUrl,dbId ,dbPass );
+        if(scrollHeight == documentHeight){
 
-        out.println( "제대로 연결되었습니다." );
+        for(var i = 0; i < 10; i++){
 
-  }catch(Exception e){
+        $('<h1>Infinity Scroll11</h1>').appendTo('body');
 
-           e.printStackTrace();
+        }      
 
-  }
+        }
 
-%>
+        
+
+        });
+
+        });
+
+        
+
+        //테스트를 위해 내부에 공간을 채워서 스크롤을 임의로 만듬
+
+        $(document).ready(function(){
+
+        for(var i = 0; i < 20; i++){
+
+        $('<h1>infinity scroll</h1>').appendTo('body');
+
+        }      
+
+        });
+
+        
+
+    </script>
+
+</head>
+
+<body>
+
+        <div>
+
+        <p>지금 내 생각을</p>
+
+        <h1>150</h1>
+
+        <textarea cols="70" rows="5"></textarea>
+
+        </div>
+
+</body>
+
+</html>

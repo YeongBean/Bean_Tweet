@@ -28,3 +28,7 @@
 #### 4/11
 - implemented paging & like & delete tweet function
 - fixed some errors
+
+#### 4/13
+- hot page : board for tweets with 10+ like
+- user profile page : this page shows your tweets (+ friend list)

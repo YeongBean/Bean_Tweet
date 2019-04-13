@@ -50,9 +50,12 @@
 	}
 	
 	String userID = null;
+	String userNickname = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String)session.getAttribute("userID");
+		userNickname = (String)session.getAttribute("userNickname");
+		
 	}
 	if(userID == null)
 	{
@@ -111,15 +114,15 @@
 					</div>
 				</li>								
 			</ul>
-			<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+			<form action="./profile.jsp" method="get" class="form-inline my-2 my-lg-0">
 				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
 	</nav>
-	<div class="col-12 text-center mt-3"><font size="18px">MAIN PAGE</font></div>
+	<div class="col-12 text-center mt-3"><font size="18px"><%= userNickname%>'s page</font></div>
 	<section class="container">
-		<form method="get" action="./index.jsp" class="form-inline">
+		<form method="get" action="./profile.jsp" class="form-inline">
 			<select name="tweetMood" class="form-control mx-1 mt-2">
 				<option value="All">All</option>
 				<option value="Happy" <% if(tweetMood.equals("Happy")) out.println("selected"); %>>Happy</option>
@@ -133,16 +136,16 @@
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="Enter contents">
 			<button class="btn btn-primary mx-1 mt-2" type="submit">Search</button>
-			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">Post</a>
-			<a class="btn btn-secondary mx-1 mt-2" data-toggle="modal" href="#reportModal">Report</a>
 		</form>
 
 	
-		
+		<div>
+			
+		</div>
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
+	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, pagenum, userNickname);
 	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
 			if(i == 5) break;
@@ -153,7 +156,7 @@
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><%= tweet.getUserID()%></small></div>
+				<div class="col-4 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><%= tweet.getUserID()%></small></div>
 				<div class="col-4 text-right">
 					Mood : <span style="color: blue;"><%= tweet.getTweetMood() %></span>
 				</div>
@@ -163,7 +166,7 @@
 			<p class="card-text"><%= tweet.getTweetContent()%></p>
 			<div class="row">
 				<div class="col-9 text-left">
-					<span style="color:green;">Like:<%= tweet.getLikeCount()%></span>
+					<span style="color:green;">Like: <%= tweet.getLikeCount()%></span>
 					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetID=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
 				</div>
 				<div class="col-3 text-right">					
@@ -224,85 +227,7 @@
 %>
 		</li>		
 	</ul>
-	<!-- modal -->
-	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-				<!-- title -->
-					<h5 class="modal-title" id="modal">Post tweet</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-				<!-- content details -->
-					<form action="./tweetRegisterAction.jsp" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-12">
-								<label>Title</label>
-								<input type="text" name="tweetTitle" class = "form-control" maxlength="40">								
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-sm-4">
-							<label>Mood</label>
-							</div>
-							<div class="form-group col-sm-8">
-							<select name="tweetMood" class="form-control">
-								<option value="Happy" >Happy</option>
-								<option value="Sad">Sad</option>
-								<option value="Angry" selected>Angry</option>
-								<option value="Normal">Normal</option>
-							</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label>Content</label>
-							<textarea name="tweetContent" class="form-control" maxlength="300"  style="height: 180px;" placeholder="Can type 300 words"></textarea>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-							<button type="submit" class="btn btn-primary">Post</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
 	
-	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-				<!-- title -->
-					<h5 class="modal-title" id="modal">Report tweet</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-				<!-- content details -->
-					<form action="./reportAction.jsp" method="post">
-						<div class="form-row">
-							<div class="form-group col-sm-12">
-								<label>Title</label>
-								<input type="text" name="reportTitle" class = "form-control" maxlength="40">								
-							</div>
-						</div>						
-						<div class="form-group">
-							<label>Report detail</label>
-							<textarea name="reportContent" class="form-control" maxlength="300"  style="height: 180px;" placeholder="Can type 300 words"></textarea>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-							<button type="submit" class="btn btn-danger">Report</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2019 LittleBEAN All Rights Reserved.
