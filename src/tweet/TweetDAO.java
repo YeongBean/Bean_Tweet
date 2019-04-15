@@ -229,6 +229,32 @@ public class TweetDAO {
 		return -1; // db error
 	}
 	
+	public int comment(int tweetIndex)
+	{
+		String SQL = "UPDATE TWEETS SET commentCount = commentCount + 1 WHERE tweetIndex = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, tweetIndex);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return -1; // db error
+	}
+	
 	public int delete(String tweetID)
 	{
 		String SQL = "DELETE FROM TWEETS WHERE tweetIndex = ?";

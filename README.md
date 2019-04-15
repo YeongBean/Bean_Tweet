@@ -32,3 +32,6 @@
 #### 4/13
 - hot page : board for tweets with 10+ like
 - user profile page : this page shows your tweets (+ friend list)
+
+#### 4/15
+- implemented comment system

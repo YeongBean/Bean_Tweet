@@ -164,7 +164,7 @@
 			<div class="row">
 				<div class="col-9 text-left">
 					<span style="color:green;">Like:<%= tweet.getLikeCount()%></span>
-					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetID=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
+					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetTitle=<%= tweet.getTweetTitle() %>&tweetNickname=<%= tweet.getUserID() %>&tweetcontent=<%= tweet.getTweetContent() %>&tweetMood=<%= tweet.getTweetMood() %>&like=<%= tweet.getLikeCount() %>&commentCount=<%= tweet.getCommentCount() %>&tweetIndex=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
 				</div>
 				<div class="col-3 text-right">					
 					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>
