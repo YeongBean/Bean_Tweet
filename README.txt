@@ -35,3 +35,6 @@
 
 #### 4/15
 - implemented comment system
+
+#### 4/16
+- implemented following system

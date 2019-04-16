@@ -4,6 +4,8 @@
 <%@ page import="user.UserDAO" %>
 <%@ page import="tweet.TweetDTO" %>
 <%@ page import="tweet.TweetDAO" %>
+<%@ page import="follow.FollowDTO" %>
+<%@ page import="follow.FollowDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
@@ -186,9 +188,19 @@
 		<label class="text-center mt-2">Followers</label>
 		<div class="card-header bg-light">
 			<div class="row">
+<%		
+	ArrayList<FollowDTO> followerList = new ArrayList<FollowDTO>();
+	FollowDAO followDAOs = new FollowDAO();
+	followerList = followDAOs.getMyFollower(userNickname);
+	if(followerList != null)
+		for(int i = 0; i < followerList.size(); i++){
+			FollowDTO follower = followerList.get(i);
+%>
 			<!-- follower list -->
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp">follower name1</a></div>
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp">follower name2</a></div>
+				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp"><%= follower.getFollowFrom()%></a></div>
+<%
+		}
+%>
 			</div>
 		</div>
 	</div>
@@ -197,9 +209,19 @@
 		<label class="text-center mt-2">Followings</label>
 		<div class="card-header bg-light">
 			<div class="row">
+<%		
+	ArrayList<FollowDTO> followingList = new ArrayList<FollowDTO>();
+	FollowDAO followDAO = new FollowDAO();
+	followingList = followDAO.getMyFollowing(userNickname);
+	if(followingList != null)
+		for(int i = 0; i < followingList.size(); i++){
+			FollowDTO following = followingList.get(i);
+%>
 			<!-- follower list -->
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp">following name1</a></div>
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp">following name2</a></div>
+				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp"><%= following.getFollowTo()%></a></div>
+<%
+		}
+%>
 			</div>
 		</div>
 	</div>
