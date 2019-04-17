@@ -148,7 +148,6 @@
 	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
 	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
-			if(i == 5) break;
 			TweetDTO tweet = tweetList.get(i);
 %>
 	

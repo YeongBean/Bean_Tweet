@@ -145,7 +145,6 @@
 	tweetList = tweetDAOs.getHotList(tweetMood, searchType, search, pagenum);
 	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
-			if(i == 5) break;
 			TweetDTO tweet = tweetList.get(i);
 %>
 	
@@ -153,7 +152,7 @@
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><%= tweet.getUserID()%></small></div>
+				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><a href="./otherUserProfile.jsp?otherUserNickname=<%= tweet.getUserID() %>"><%= tweet.getUserID()%></a></small></div>
 				<div class="col-4 text-right">
 					Mood : <span style="color: blue;"><%= tweet.getTweetMood() %></span>
 				</div>

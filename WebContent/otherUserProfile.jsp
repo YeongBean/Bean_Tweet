@@ -164,7 +164,6 @@
 	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, pagenum, userNickname);
 	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
-			if(i == 5) break;
 			TweetDTO tweet = tweetList.get(i);
 %>
 	
@@ -211,7 +210,7 @@
 			FollowDTO follower = followerList.get(i);
 %>
 			<!-- follower list -->
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp"><%= follower.getFollowFrom()%></a></div>
+				<div class="card-header bg-light col-12 text-center"><a  href="./otherUserProfile.jsp?otherUserNickname=<%= follower.getFollowFrom() %>"><%= follower.getFollowFrom()%></a></div>
 <%
 		}
 %>
@@ -232,7 +231,7 @@
 			FollowDTO following = followingList.get(i);
 %>
 			<!-- follower list -->
-				<div class="card-header bg-light col-12 text-center"><a  href="./followerPage.jsp"><%= following.getFollowTo()%></a></div>
+				<div class="card-header bg-light col-12 text-center"><a  href="./otherUserProfile.jsp?otherUserNickname=<%= following.getFollowTo() %>"><%= following.getFollowTo()%></a></div>
 <%
 		}
 %>

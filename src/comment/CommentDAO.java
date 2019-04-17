@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import comment.CommentDTO;
-import tweet.TweetDTO;
 import util.DatabaseUtil;
 
 public class CommentDAO {
@@ -38,7 +37,7 @@ public class CommentDAO {
 		return -1;
 	}
 	
-	public int delete(String commentIndex)
+	public int delete(int commentIndex)
 	{
 		String SQL = "DELETE FROM COMMENT WHERE commentIndex = ?";
 		Connection conn = null;
@@ -47,7 +46,7 @@ public class CommentDAO {
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, Integer.parseInt(commentIndex));
+			pstmt.setInt(1, commentIndex);
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -5,6 +5,7 @@
 ## Functions
 - You can sign up with ID, PW, E-mail, nickname
 - You can sign in with ID, PW
+- You can use service after authenticated with your E-mail
 - You can post tweet cards to main page
 - You can give 'like' to tweets you like
 - If your tweet gets 10+ likes, the tweet shows on 'hot page'
@@ -42,6 +43,9 @@
 
 #### 4/16
 - Implemented following system
+
+#### 4/17
+- Modified to delete all related comments when deleting tweet
 
 
 ### Develop enviornment
