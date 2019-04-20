@@ -10,7 +10,7 @@ import util.DatabaseUtil;
 public class TweetDAO {
 	public int write(TweetDTO tweetDTO)
 	{
-		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,0,0)";
+		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,?,0,0)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -21,6 +21,7 @@ public class TweetDAO {
 			pstmt.setString(2, tweetDTO.getTweetTitle());
 			pstmt.setString(3, tweetDTO.getTweetContent());
 			pstmt.setString(4, tweetDTO.getTweetMood());
+			pstmt.setString(5, tweetDTO.getTweetScope());
 			return pstmt.executeUpdate();			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -72,8 +73,9 @@ public class TweetDAO {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getInt(6),
-						rs.getInt(7)
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8)
 						);
 				tweetList.add(tweet);
 			}
@@ -127,8 +129,9 @@ public class TweetDAO {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getInt(6),
-						rs.getInt(7)
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8)
 						);
 				tweetList.add(tweet);
 			}
@@ -183,8 +186,9 @@ public class TweetDAO {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getInt(6),
-						rs.getInt(7)
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8)
 						);
 				tweetList.add(tweet);
 			}

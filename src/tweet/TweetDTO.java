@@ -6,9 +6,17 @@ public class TweetDTO {
 	String tweetTitle;
 	String tweetContent;
 	String tweetMood;
+	String tweetScope;
 	int likeCount;
 	int commentCount;	
 	
+	
+	public String getTweetScope() {
+		return tweetScope;
+	}
+	public void setTweetScope(String tweetScope) {
+		this.tweetScope = tweetScope;
+	}
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -58,7 +66,7 @@ public class TweetDTO {
 	public TweetDTO() {
 		
 	}
-	public TweetDTO(int tweetIndex, String userID, String tweetTitle, String tweetContent, String tweetMood,
+	public TweetDTO(int tweetIndex, String userID, String tweetTitle, String tweetContent, String tweetMood,String tweetScope,
 			int likeCount, int commentCount) {
 		super();
 		this.tweetIndex = tweetIndex;
@@ -68,5 +76,6 @@ public class TweetDTO {
 		this.tweetMood = tweetMood;
 		this.likeCount = likeCount;
 		this.commentCount = commentCount;
+		this.tweetScope = tweetScope;
 	}
 }

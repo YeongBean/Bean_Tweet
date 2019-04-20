@@ -27,7 +27,7 @@
 	String tweetTitle = null;
 	String tweetContent = null;
 	String tweetMood = null;
-	
+	String tweetScope = null;
 	String userPassword = null;
 	String userEmail = null;
 	
@@ -43,8 +43,12 @@
 	{
 		tweetMood = request.getParameter("tweetMood");
 	}
+	if(request.getParameter("tweetScope") != null)
+	{
+		tweetScope = request.getParameter("tweetScope");
+	}
 	
-	if(tweetTitle == null || tweetContent == null || tweetMood == null || tweetTitle.equals("") || tweetContent.equals(""))
+	if(tweetTitle == null || tweetContent == null || tweetMood == null || tweetScope == null || tweetTitle.equals("") || tweetContent.equals(""))
 	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -56,7 +60,7 @@
 	}
 	
 	TweetDAO tweetDAO = new TweetDAO();
-	TweetDTO tweetDTO = new TweetDTO(0, userNickname, tweetTitle, tweetContent, tweetMood, 0, 0);
+	TweetDTO tweetDTO = new TweetDTO(0, userNickname, tweetTitle, tweetContent, tweetMood, tweetScope, 0, 0);
 	int result = tweetDAO.write(tweetDTO);
 	if( result == -1)
 	{

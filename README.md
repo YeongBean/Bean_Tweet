@@ -47,6 +47,10 @@
 #### 4/17
 - Modified to delete all related comments when deleting tweet
 
+#### 4/20
+- Implemented tweet's public scope(To public, To Followers)
+- To public : Every users can see this tweet
+- To Followers : Only your followers can see this tweet
 
 ### Develop enviornment
 - Window10

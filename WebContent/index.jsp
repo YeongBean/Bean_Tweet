@@ -4,6 +4,8 @@
 <%@ page import="user.UserDAO" %>
 <%@ page import="tweet.TweetDTO" %>
 <%@ page import="tweet.TweetDAO" %>
+<%@ page import="follow.FollowDTO" %>
+<%@ page import="follow.FollowDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
@@ -146,16 +148,39 @@
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
 	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
-	if(tweetList != null)
+	
+	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
+	FollowDAO followDAO = new FollowDAO();
+	FollowDTO followDTO = new FollowDTO();
+	boolean CanISee = false;
+	if(tweetList != null){
 		for(int i = 0; i < tweetList.size(); i++){
 			TweetDTO tweet = tweetList.get(i);
+			IsFollowList = followDAO.getMyFollower(tweet.getUserID());
+			if(IsFollowList != null){
+				for(int j = 0; j < IsFollowList.size(); j++){
+					followDTO = IsFollowList.get(j);
+					if((followDTO.getFollowFrom().equals(userNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
+						CanISee = true;
+						break;
+					}
+				}
+			}
+			if(tweet.getUserID().equals(userNickname)){
+				CanISee = true;
+			}
+			if(tweet.getTweetScope().equals("ToPublic")){
+				CanISee = true;
+			}
+			
+			if(CanISee == true){
 %>
 	
 		<!-- card -->
 	<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><a href="./otherUserProfile.jsp?otherUserNickname=<%= tweet.getUserID() %>"><%= tweet.getUserID()%></a></small></div>
+				<div class="col-8 text-left"><%= tweet.getTweetTitle()%> &nbsp&nbsp&nbsp&nbsp;<small><a href="./otherUserProfile.jsp?otherUserNickname=<%= tweet.getUserID() %>"><%= tweet.getUserID()%></a> (<%= tweet.getTweetScope() %>)</small></div>
 				<div class="col-4 text-right">
 					Mood : <span style="color: blue;"><%= tweet.getTweetMood() %></span>
 				</div>
@@ -176,7 +201,9 @@
 		</div>
 	</div>
 <%
+			}
 		}
+	}
 %>
 	</section>
 	<ul class="pagination justify-content-center mt-3">
@@ -252,10 +279,21 @@
 							</div>
 							<div class="form-group col-sm-8">
 							<select name="tweetMood" class="form-control">
-								<option value="Happy" >Happy</option>
+								<option value="Happy" selected>Happy</option>
 								<option value="Sad">Sad</option>
-								<option value="Angry" selected>Angry</option>
+								<option value="Angry">Angry</option>
 								<option value="Normal">Normal</option>
+							</select>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-4">
+							<label>Public scope</label>
+							</div>
+							<div class="form-group col-sm-8">
+							<select name="tweetScope" class="form-control">
+								<option value="ToPublic" selected>To Public</option>
+								<option value="ToFollower">To followers</option>
 							</select>
 							</div>
 						</div>
