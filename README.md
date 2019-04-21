@@ -12,6 +12,7 @@
 - You can visit your own page : 'profile page'
 - You can leave your thoughts on tweets(comment)
 - If there are user you want to know more, you can follow in the user's profile page
+- You can select public scope of your tweet. If you don't want to show tweet to public, select 'To Followers'
 
 ## Progress
 #### 4/2 
