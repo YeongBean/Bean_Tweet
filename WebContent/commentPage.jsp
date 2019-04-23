@@ -37,25 +37,8 @@
 	int like = 0;
 	int tweetIndex = 0;
 	int commentCount = 0;
-	if(request.getParameter("tweetTitle") != null){
-		tweetTitle = request.getParameter("tweetTitle");
-	}
-	if(request.getParameter("tweetNickname") != null){
-		tweetNickname = request.getParameter("tweetNickname");
-	}
-	if(request.getParameter("tweetcontent") != null){
-		tweetcontent = request.getParameter("tweetcontent");
-	}
-	if(request.getParameter("tweetMood") != null){
-		tweetMood = request.getParameter("tweetMood");
-	}
-	if(request.getParameter("like") != null){
-		try{
-			like = Integer.parseInt(request.getParameter("like"));
-		}catch(Exception e){
-			System.out.println("Search page error");
-		}		
-	}
+	TweetDAO twDAO = new TweetDAO();
+	
 	if(request.getParameter("tweetIndex") != null){
 		try{
 			tweetIndex = Integer.parseInt(request.getParameter("tweetIndex"));
@@ -63,13 +46,13 @@
 			System.out.println("tweetIndex error");
 		}		
 	}
-	if(request.getParameter("commentCount") != null){
-		try{
-			commentCount = Integer.parseInt(request.getParameter("commentCount"));
-		}catch(Exception e){
-			System.out.println("tweetIndex error");
-		}		
-	}
+	TweetDTO twDTO = twDAO.getTweetWithIndex(tweetIndex);
+	tweetTitle = twDTO.getTweetTitle();
+	tweetNickname = twDTO.getUserID();
+	tweetcontent = twDTO.getTweetContent();
+	tweetMood = twDTO.getTweetMood();
+	like = twDTO.getLikeCount();
+	commentCount = twDTO.getCommentCount();
 	
 	String userID = null;
 	String userNickname = null;
@@ -194,9 +177,18 @@
 				<div class="col-3 text-center">
 					<a><%= comm.getCommentUserID() %></a>
 				</div>
-				<div class="col-9 text-left">					
+				<div class="col-6 text-left">					
 					<a><%= comm.getCommentContent() %></a>
 				</div>
+<%
+	if(userNickname.equals(comm.getCommentUserID())){
+%>
+				<div class="col-3 text-right">	
+				<a onclick="return confirm('Really want to delete?')" href="./commentDeleteAction.jsp?commentIndex=<%= comm.getCommentIndex()%>&tweetIndex=<%=tweetIndex%>">Delete</a>
+				</div>
+<%
+	}
+%>
 			</div>				
 		</form>
 	</div>

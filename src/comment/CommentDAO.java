@@ -66,7 +66,7 @@ public class CommentDAO {
 	public ArrayList<CommentDTO> getCommentList (int commentTweetIndex)
 	{
 		ArrayList<CommentDTO> commentList = null;
-		String SQL = "SELECT * FROM COMMENT WHERE commentTweetIndex = ? ";
+		String SQL = "SELECT * FROM COMMENT WHERE commentTweetIndex = ? ORDER BY commentIndex DESC";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -99,5 +99,38 @@ public class CommentDAO {
 			catch(Exception e){ e.printStackTrace();}
 		}
 		return commentList; 
+	}
+	
+	public CommentDTO getCommentUserNickname (int commentIndex)
+	{
+		String SQL = "SELECT * FROM COMMENT WHERE commentIndex = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, commentIndex);
+			rs = pstmt.executeQuery();
+			CommentDTO comment = new CommentDTO(
+					rs.getInt(1),
+					rs.getInt(2),
+					rs.getString(3),
+					rs.getString(4)
+					);
+			return comment;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return null; 
 	}
 }

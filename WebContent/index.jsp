@@ -116,10 +116,9 @@
 					</div>
 				</li>								
 			</ul>
-			<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
-				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
+			<div>
+				<%= userNickname %>
+			</div>
 		</div>
 	</nav>
 	<div class="col-12 text-center mt-3"><font size="18px">MAIN PAGE</font></div>
@@ -148,7 +147,7 @@
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
 	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
-	
+		
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();
 	FollowDTO followDTO = new FollowDTO();
@@ -157,6 +156,7 @@
 		for(int i = 0; i < tweetList.size(); i++){
 			TweetDTO tweet = tweetList.get(i);
 			IsFollowList = followDAO.getMyFollower(tweet.getUserID());
+			CanISee = false;
 			if(IsFollowList != null){
 				for(int j = 0; j < IsFollowList.size(); j++){
 					followDTO = IsFollowList.get(j);
@@ -191,7 +191,7 @@
 			<div class="row">
 				<div class="col-9 text-left">
 					<span style="color:green;">Like:<%= tweet.getLikeCount()%></span>
-					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetTitle=<%= tweet.getTweetTitle() %>&tweetNickname=<%= tweet.getUserID() %>&tweetcontent=<%= tweet.getTweetContent() %>&tweetMood=<%= tweet.getTweetMood() %>&like=<%= tweet.getLikeCount() %>&commentCount=<%= tweet.getCommentCount() %>&tweetIndex=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
+					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetIndex=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
 				</div>
 				<div class="col-3 text-right">					
 					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>

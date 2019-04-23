@@ -53,6 +53,11 @@
 - To public : Every users can see this tweet
 - To Followers : Only your followers can see this tweet
 
+#### 4/23
+- Completed comment system
+- Modified able to delete user's comment
+- Fixed errors related with showing tweet cards
+
 ### Develop enviornment
 - Window10
 - JSP

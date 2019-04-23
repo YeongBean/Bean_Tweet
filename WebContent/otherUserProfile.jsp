@@ -161,7 +161,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
+	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, pagenum, userNickname);
 	
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();
@@ -171,17 +171,15 @@
 		for(int i = 0; i < tweetList.size(); i++){
 			TweetDTO tweet = tweetList.get(i);
 			IsFollowList = followDAO.getMyFollower(tweet.getUserID());
+			CanISee = false;
 			if(IsFollowList != null){
 				for(int j = 0; j < IsFollowList.size(); j++){
 					followDTO = IsFollowList.get(j);
-					if((followDTO.getFollowFrom().equals(userNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
+					if((followDTO.getFollowFrom().equals(myuserNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
 						CanISee = true;
 						break;
 					}
 				}
-			}
-			if(tweet.getUserID().equals(userNickname)){
-				CanISee = true;
 			}
 			if(tweet.getTweetScope().equals("ToPublic")){
 				CanISee = true;

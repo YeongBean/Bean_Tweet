@@ -147,8 +147,8 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
-	
+	tweetList = tweetDAOs.getHotList(tweetMood, searchType, search, pagenum);
+		
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();
 	FollowDTO followDTO = new FollowDTO();
@@ -157,6 +157,7 @@
 		for(int i = 0; i < tweetList.size(); i++){
 			TweetDTO tweet = tweetList.get(i);
 			IsFollowList = followDAO.getMyFollower(tweet.getUserID());
+			CanISee = false;
 			if(IsFollowList != null){
 				for(int j = 0; j < IsFollowList.size(); j++){
 					followDTO = IsFollowList.get(j);

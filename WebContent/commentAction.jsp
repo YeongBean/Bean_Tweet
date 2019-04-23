@@ -78,7 +78,7 @@
 			}else{
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("history.back();");
+				script.println("location.href = 'commentPage.jsp?tweetIndex=" + tweetIndex + "'");
 				script.println("</script>");
 				script.close();
 				return; //successed

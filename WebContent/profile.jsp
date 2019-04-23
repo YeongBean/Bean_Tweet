@@ -147,33 +147,11 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
-	
-	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
-	FollowDAO followDAO = new FollowDAO();
-	FollowDTO followDTO = new FollowDTO();
-	boolean CanISee = false;
-	if(tweetList != null){
+	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, pagenum, userNickname);
+	if(tweetList != null)
 		for(int i = 0; i < tweetList.size(); i++){
+			if(i == 5) break;
 			TweetDTO tweet = tweetList.get(i);
-			IsFollowList = followDAO.getMyFollower(tweet.getUserID());
-			if(IsFollowList != null){
-				for(int j = 0; j < IsFollowList.size(); j++){
-					followDTO = IsFollowList.get(j);
-					if((followDTO.getFollowFrom().equals(userNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
-						CanISee = true;
-						break;
-					}
-				}
-			}
-			if(tweet.getUserID().equals(userNickname)){
-				CanISee = true;
-			}
-			if(tweet.getTweetScope().equals("ToPublic")){
-				CanISee = true;
-			}
-			
-			if(CanISee == true){
 %>
 	
 		<!-- card -->
@@ -201,8 +179,7 @@
 		</div>
 	</div>
 <%
-			}
-		}
+
 	}
 %>
 	</div>

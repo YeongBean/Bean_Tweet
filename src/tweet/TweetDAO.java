@@ -259,6 +259,32 @@ public class TweetDAO {
 		return -1; // db error
 	}
 	
+	public int deletecomment(int tweetIndex)
+	{
+		String SQL = "UPDATE TWEETS SET commentCount = commentCount - 1 WHERE tweetIndex = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, tweetIndex);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return -1; // db error
+	}
+	
 	public int delete(String tweetID)
 	{
 		String SQL = "DELETE FROM TWEETS WHERE tweetIndex = ?";
@@ -299,6 +325,46 @@ public class TweetDAO {
 			if(rs.next())
 			{
 				return rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try{ if(conn != null) conn.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(pstmt != null) pstmt.close();	}
+			catch(Exception e){ e.printStackTrace();}
+			
+			try{ if(rs != null) rs.close();	}
+			catch(Exception e){ e.printStackTrace();}
+		}
+		return null; // db error or not exist in db
+	}
+	
+	public TweetDTO getTweetWithIndex(int index)
+	{
+		String SQL = "SELECT * FROM TWEETS WHERE tweetIndex=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, index);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+			{
+				TweetDTO tweet = new TweetDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8)
+						);
+				return tweet;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
