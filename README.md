@@ -35,7 +35,7 @@
 ![search](https://postfiles.pstatic.net/MjAxOTA0MjhfMTUy/MDAxNTU2NDM0MTEyMDgw.Tmi2ND4KgAxoec2GG-KyXdwyEUXxNsbD0tHJOxcAg14g.w-FDQDCwzmPZHZw1_ELDIX4mr7OIpCydfi1voJjWB28g.PNG.nogadahalf12/search.png?type=w773)
 - Now, let's post your tweet. Click post button and write contents
 ![post tweet](https://postfiles.pstatic.net/MjAxOTA0MjhfMjcg/MDAxNTU2NDM0MTEyNDcx.uN__MOAc8Jhvm0gz4nfVEUJiF4zbC3aDHV4ytMvdIHcg.X6LF9cnwp2S0JYFnTfqYM5v5zLK7Dpat5IzdYoO9Fdcg.PNG.nogadahalf12/post.png?type=w773)
-- Let's check your profile page. To leave comment, click 'comment' link. You can do this at other pages
+- Let's check your profile page. To leave comment, click 'comment' link. You can also do this at other pages
 ![profile](https://postfiles.pstatic.net/MjAxOTA0MjhfOTgg/MDAxNTU2NDM0MTEyMDY4.lDnhgQ5unQZpNj8Q73gde4u3-eRwWZXOxmIqvgPW5uAg.esM7jZZzrEViLzFZ2ejmZ-QspzgPoWWKcerCluJnIZIg.PNG.nogadahalf12/profile.png?type=w773)
 - This is comment page. You can leave comment and delete comment(only you wrote)
 ![comment page](https://postfiles.pstatic.net/MjAxOTA0MjhfMjA1/MDAxNTU2NDM0MTEyMDU2.tepZ1s1DpyfDtbsaXVyvuHbMEm5_iTdsv5qex7PCj3cg.51TZ8ucuVU_0T8NIDUplNMLA29itWpTKIG7ee8EnXi8g.PNG.nogadahalf12/comment.png?type=w773)
