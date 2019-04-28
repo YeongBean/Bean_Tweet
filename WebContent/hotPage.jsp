@@ -116,10 +116,9 @@
 					</div>
 				</li>								
 			</ul>
-			<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
-				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
+			<div>
+				<%= userNickname %>
+			</div>
 		</div>
 	</nav>
 	<div class="col-12 text-center mt-3"><font size="18px">HOT PAGE</font></div>
@@ -147,7 +146,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getHotList(tweetMood, searchType, search, pagenum);
+	tweetList = tweetDAOs.getHotList(tweetMood, searchType, search);
 		
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();

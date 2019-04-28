@@ -120,10 +120,9 @@
 					</div>
 				</li>								
 			</ul>
-			<form action="./profile.jsp" method="get" class="form-inline my-2 my-lg-0">
-				<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="Enter some contents" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
+			<div>
+				<%= userNickname %>
+			</div>
 		</div>
 	</nav>
 	<div class="col-12 text-center mt-3"><font size="18px"><%= userNickname%>'s page</font></div>
@@ -161,7 +160,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, pagenum, userNickname);
+	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, userNickname);
 	
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();

@@ -38,7 +38,7 @@ public class TweetDAO {
 		return -1;
 	}
 	
-	public ArrayList<TweetDTO> getList (String tweetMood, String searchType, String search, int pagenum)
+	public ArrayList<TweetDTO> getList (String tweetMood, String searchType, String search)
 	{
 		if(tweetMood.equals("All"))
 		{
@@ -53,11 +53,11 @@ public class TweetDAO {
 			if(searchType.contentEquals("Current"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY tweetIndex DESC";
 			}else if(searchType.contentEquals("Like"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY likeCount DESC";
 			}
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -94,7 +94,7 @@ public class TweetDAO {
 		return tweetList; 
 	}
 	
-	public ArrayList<TweetDTO> getHotList (String tweetMood, String searchType, String search, int pagenum)
+	public ArrayList<TweetDTO> getHotList (String tweetMood, String searchType, String search)
 	{
 		if(tweetMood.equals("All"))
 		{
@@ -109,11 +109,11 @@ public class TweetDAO {
 			if(searchType.contentEquals("Current"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE likeCount > 9 AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY tweetIndex DESC";
 			}else if(searchType.contentEquals("Like"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE likeCount > 9 AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY likeCount DESC";
 			}
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -150,7 +150,7 @@ public class TweetDAO {
 		return tweetList; 
 	}
 	
-	public ArrayList<TweetDTO> getMyList (String tweetMood, String searchType, String search, int pagenum, String userNickname)
+	public ArrayList<TweetDTO> getMyList (String tweetMood, String searchType, String search, String userNickname)
 	{
 		if(tweetMood.equals("All"))
 		{
@@ -165,11 +165,11 @@ public class TweetDAO {
 			if(searchType.contentEquals("Current"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE userID = ? AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY tweetIndex DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY tweetIndex DESC";
 			}else if(searchType.contentEquals("Like"))
 			{
 				SQL = "SELECT * FROM TWEETS WHERE userID = ? AND tweetMood LIKE ? AND CONCAT(userID, tweetTitle, tweetContent) LIKE " +
-						"? ORDER BY likeCount DESC LIMIT " + pagenum * 5 + ", " + pagenum * 5 + 5;
+						"? ORDER BY likeCount DESC";
 			}
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);

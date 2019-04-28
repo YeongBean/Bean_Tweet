@@ -17,15 +17,6 @@
 	<!-- add bootstrap,custom CSS -->
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/custom.css">
-	<script>
-		function Load_More() {
-			alert("Load 5 more tweets");
-			
-		}
-		function Load_End() {
-			alert("End of tweets");
-		}
-	</script>
 </head>
 <body>
 <%
@@ -146,7 +137,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getList(tweetMood, searchType, search, pagenum);
+	tweetList = tweetDAOs.getList(tweetMood, searchType, search);
 		
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();
@@ -163,15 +154,15 @@
 					if((followDTO.getFollowFrom().equals(userNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
 						CanISee = true;
 						break;
-					}
+					}// if this tweet is for followers and you are the follow
 				}
 			}
 			if(tweet.getUserID().equals(userNickname)){
 				CanISee = true;
-			}
+			} // if you wrote this tweet
 			if(tweet.getTweetScope().equals("ToPublic")){
 				CanISee = true;
-			}
+			} // if this tweet  is for public
 			
 			if(CanISee == true){
 %>
@@ -206,53 +197,6 @@
 	}
 %>
 	</section>
-	<ul class="pagination justify-content-center mt-3">
-		<li class = "page-item">
-<%
-	if(pagenum <= 0){		
-%>
-	<a class="page-link disabled">back</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum-1 %>">back</a>
-<%
-	}
-%>
-		</li>
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled">next</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum+1 %>">next</a>
-<%
-	}
-%>
-		</li>
-		
-		
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled" onclick = "Load_End();">Load More</a>
-<%
-	}else{
-%>
-	<a class="page-link" onclick="Load_More();">Load More</a>
-<%
-	}
-%>
-		</li>		
-	</ul>
 	<!-- modal -->
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
