@@ -11,7 +11,7 @@ import util.DatabaseUtil;
 public class FollowDAO {
 	public int getFollowTo(FollowDTO followDTO) // check if already i followed
 	{
-		String SQL = "SELECT followTo FROM USER WHERE followFrom = ? AND followTO = ?";
+		String SQL = "SELECT * FROM USER WHERE followFrom = ? AND followTO = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

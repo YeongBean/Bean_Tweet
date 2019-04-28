@@ -88,6 +88,9 @@
 - Deleted paging system
 - Now all tweets which are satisfying condition display on board
 
+#### 4/29
+- Implemented unfollow system
+
 ### Development enviornment
 - Window10
 - JSP

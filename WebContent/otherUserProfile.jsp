@@ -121,7 +121,7 @@
 				</li>								
 			</ul>
 			<div>
-				<%= userNickname %>
+				<%= myuserNickname %>
 			</div>
 		</div>
 	</nav>
@@ -144,12 +144,27 @@
 			<button class="btn btn-primary mx-1 mt-2" type="submit">Search</button>	
 		</form>
 <%
-	if(myuserNickname.equals(userNickname) == false)
-	{
+	ArrayList<FollowDTO> followerList = new ArrayList<FollowDTO>();
+	FollowDAO followDAOs = new FollowDAO();
+	followerList = followDAOs.getMyFollower(userNickname);
+	boolean followed = false;
+	FollowDTO follower = new FollowDTO();
+	if(followerList != null){
+		for(int i = 0; i < followerList.size(); i++){
+			follower = followerList.get(i);
+			if(myuserNickname.equals(follower.getFollowFrom()))
+				followed = true;
+		}
+		if(followed != true){
 %>
 		<a class="btn btn-secondary mx-1 mt-2" href="./followAction.jsp?otherUserNickname=<%= userNickname%>">Follow</a>
 		
 <%
+		}else{
+%>
+		<a class="btn btn-secondary mx-1 mt-2" href="./unfollowAction.jsp?otherUserNickname=<%= userNickname%>">Unfollow</a>
+<%
+		}
 	}
 %>
 		</div>
@@ -224,12 +239,9 @@
 		<div class="card-header bg-light">
 			<div class="row">
 <%		
-	ArrayList<FollowDTO> followerList = new ArrayList<FollowDTO>();
-	FollowDAO followDAOs = new FollowDAO();
-	followerList = followDAOs.getMyFollower(userNickname);
 	if(followerList != null)
 		for(int i = 0; i < followerList.size(); i++){
-			FollowDTO follower = followerList.get(i);
+			follower = followerList.get(i);
 %>
 			<!-- follower list -->
 				<div class="card-header bg-light col-12 text-center"><a  href="./otherUserProfile.jsp?otherUserNickname=<%= follower.getFollowFrom() %>"><%= follower.getFollowFrom()%></a></div>
@@ -263,53 +275,6 @@
 	</div>
 	</div>
 	</section>
-	<ul class="pagination justify-content-center mt-3">
-		<li class = "page-item">
-<%
-	if(pagenum <= 0){		
-%>
-	<a class="page-link disabled">back</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum-1 %>">back</a>
-<%
-	}
-%>
-		</li>
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled">next</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum+1 %>">next</a>
-<%
-	}
-%>
-		</li>
-		
-		
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled" onclick = "Load_End();">Load More</a>
-<%
-	}else{
-%>
-	<a class="page-link" onclick="Load_More();">Load More</a>
-<%
-	}
-%>
-		</li>		
-	</ul>
 	
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">

@@ -44,14 +44,14 @@
 	FollowDAO followDAO = new FollowDAO();
 	FollowDTO followDTO = new FollowDTO(userNickname, otherUserNickname);
 	int result = followDAO.getFollowTo(followDTO);
-	if( result == -1) //if i didn't follow yet
+	if( result == -1) //if i following this user
 	{
-		result = followDAO.follow(followDTO);
+		result = followDAO.unfollow(followDTO);
 		if(result != -1)
 		{
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('Followed!');");
+			script.println("alert('Unfollowed');");
 			script.println("location.href = 'otherUserProfile.jsp?otherUserNickname=" + otherUserNickname + "'");
 			script.println("</script>");
 			script.close();
@@ -59,7 +59,7 @@
 		}else{
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('Following failed..');");
+			script.println("alert('Unfollowing failed..');");
 			script.println("history.back();");
 			script.println("</script>");
 			script.close();
@@ -68,7 +68,7 @@
 	}else	{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('You already followed');");
+		script.println("alert('You are not following');");
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();

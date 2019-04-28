@@ -70,6 +70,7 @@
 		script.close();
 		return;
 	}
+	String site_code = request.getServerName();
  %>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">LittleBEAN Tweet</a>

@@ -228,55 +228,7 @@
 	</div>
 	</div>
 	</section>
-	<ul class="pagination justify-content-center mt-3">
-		<li class = "page-item">
-<%
-	if(pagenum <= 0){		
-%>
-	<a class="page-link disabled">back</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum-1 %>">back</a>
-<%
-	}
-%>
-		</li>
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled">next</a>
-<%
-	}else{
-%>
-	<a class="page-link" href="./index.jsp?tweetMood=<% URLEncoder.encode(tweetMood, "UTF-8"); %>&searchType=
-	<%= URLEncoder.encode(searchType, "UTF-8") %>&search=<%= URLEncoder.encode(search, "UTF-8") %>&pagenum=
-	<%= pagenum+1 %>">next</a>
-<%
-	}
-%>
-		</li>
-		
-		
-		<li class = "page-item">
-<%
-	if(tweetList.size() < (5 * pagenum)+5){		
-%>
-	<a class="page-link disabled" onclick = "Load_End();">Load More</a>
-<%
-	}else{
-%>
-	<a class="page-link" onclick="Load_More();">Load More</a>
-<%
-	}
-%>
-		</li>		
-	</ul>
-	
-	
+
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2019 LittleBEAN All Rights Reserved.
 	</footer>
