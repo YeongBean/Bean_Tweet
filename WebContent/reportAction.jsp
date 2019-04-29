@@ -16,9 +16,11 @@
 
 	UserDAO userDAO = new UserDAO();
 	String userID = null;
+	String userNickname = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String)session.getAttribute("userID");
+		userNickname = (String)session.getAttribute("userNickname");
 	}
 	if(userID == null)
 	{
@@ -34,6 +36,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String reportTitle = null;
 	String reportContent = null;
+	String tweetindex= null;
 	if(request.getParameter("reportTitle") != null)
 	{
 		reportTitle = request.getParameter("reportTitle");
@@ -57,7 +60,7 @@
 	String from = userDAO.getUserEmail(userID);
 	String to = "yoonbin31@gmail.com";
 	String subject = "This is report mail";
-	String content = "Reporter : " + userID + 
+	String content = "Reporter : " + userNickname + 
 			"<br>Report Title : " + reportTitle +
 			"<br>report Content : " + reportContent;
 	Properties p = new Properties();

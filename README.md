@@ -15,6 +15,7 @@
 - If there are user you want to know more, you can follow in the user's profile page
 - You can select public scope of your tweet. If you don't want to show tweet to public, select 'To Followers'
 - You can search tweets with keyword
+- You can report tweet (only other user's tweets)
 
 ## How to use
 - This tweet system is only for authenticated users. You should sign in first
@@ -39,6 +40,11 @@
 ![profile](https://postfiles.pstatic.net/MjAxOTA0MjhfOTgg/MDAxNTU2NDM0MTEyMDY4.lDnhgQ5unQZpNj8Q73gde4u3-eRwWZXOxmIqvgPW5uAg.esM7jZZzrEViLzFZ2ejmZ-QspzgPoWWKcerCluJnIZIg.PNG.nogadahalf12/profile.png?type=w773)
 - This is comment page. You can leave comment and delete comment(only you wrote)
 ![comment page](https://postfiles.pstatic.net/MjAxOTA0MjhfMjA1/MDAxNTU2NDM0MTEyMDU2.tepZ1s1DpyfDtbsaXVyvuHbMEm5_iTdsv5qex7PCj3cg.51TZ8ucuVU_0T8NIDUplNMLA29itWpTKIG7ee8EnXi8g.PNG.nogadahalf12/comment.png?type=w773)
+- If you found bad tweet, click report button
+![report button](https://postfiles.pstatic.net/MjAxOTA0MjlfMTc2/MDAxNTU2NTQ1NjUwNDcz.5q02qfK7ONKwCKg5RtyA_a47nW_Mm33B2wMNhJVp2Mwg.wNA6QdnKKxqbFB21Y-c_9Lh7X_O3Q0Yj8XH8mKDW3zog.PNG.nogadahalf12/report_btn.png?type=w773)
+- Fill the blanks and click report button. Then this contents will send to my email
+![report modal](https://postfiles.pstatic.net/MjAxOTA0MjlfMjA2/MDAxNTU2NTQ1NjUwNTA5.dV69TwNIztyU7a-gM0WkPbRTt4ksB28khC9uuG8cf-8g.qvq0Ux8XVnGN93TZUbzi4P-KtyjITubntljsxK8L2Fsg.PNG.nogadahalf12/report.png?type=w773)
+![my email report check](https://postfiles.pstatic.net/MjAxOTA0MjlfMjAg/MDAxNTU2NTQ1NjUwNDk2.gxrz9Nzc-ARzDLf3o70BrvPtAdTptcF7g447UI4gBogg.1ctK9ogyexVc8tsKU4Qg_7ANncHnG48kaeel0FkNO3cg.PNG.nogadahalf12/report_check.png?type=w773)
 
 ## Progress
 #### 4/2 
@@ -90,6 +96,7 @@
 
 #### 4/29
 - Implemented unfollow system
+- Completed report system
 
 ### Development enviornment
 - Window10

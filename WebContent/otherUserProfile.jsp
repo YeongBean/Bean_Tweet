@@ -220,7 +220,18 @@
 					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetTitle=<%= tweet.getTweetTitle() %>&tweetNickname=<%= tweet.getUserID() %>&tweetcontent=<%= tweet.getTweetContent() %>&tweetMood=<%= tweet.getTweetMood() %>&like=<%= tweet.getLikeCount() %>&commentCount=<%= tweet.getCommentCount() %>&tweetIndex=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
 				</div>
 				<div class="col-3 text-right">					
+<%
+	if(tweet.getUserID().equals(userNickname))
+	{
+%>			
 					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>
+<%
+	}else{
+%>
+					<a data-toggle="modal" href="#reportModal">Report</a>
+<%
+	}
+%>
 					&nbsp&nbsp&nbsp&nbsp<a onclick="return confirm('Like this tweet?')" href="./likeAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Like</a>
 				</div>
 			</div>

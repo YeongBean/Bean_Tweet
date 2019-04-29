@@ -130,7 +130,6 @@
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="Enter contents">
 			<button class="btn btn-primary mx-1 mt-2" type="submit">Search</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">Post</a>
-			<a class="btn btn-secondary mx-1 mt-2" data-toggle="modal" href="#reportModal">Report</a>
 		</form>
 
 	
@@ -185,8 +184,19 @@
 					<span style="color:green;">Like:<%= tweet.getLikeCount()%></span>
 					&nbsp&nbsp&nbsp&nbsp<a href="./commentPage.jsp?tweetIndex=<%= tweet.getTweetIndex() %>">Comment: <%= tweet.getCommentCount()%></a>
 				</div>
-				<div class="col-3 text-right">					
+				<div class="col-3 text-right">		
+<%
+	if(tweet.getUserID().equals(userNickname))
+	{
+%>			
 					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>
+<%
+	}else{
+%>
+					<a data-toggle="modal" href="#reportModal">Report</a>
+<%
+	}
+%>
 					&nbsp&nbsp&nbsp&nbsp<a onclick="return confirm('Like this tweet?')" href="./likeAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Like</a>
 				</div>
 			</div>
