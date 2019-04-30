@@ -149,6 +149,7 @@
 	followerList = followDAOs.getMyFollower(userNickname);
 	boolean followed = false;
 	FollowDTO follower = new FollowDTO();
+	if(userNickname.equals(myuserNickname) == false){
 	if(followerList != null){
 		for(int i = 0; i < followerList.size(); i++){
 			follower = followerList.get(i);
@@ -165,6 +166,7 @@
 		<a class="btn btn-secondary mx-1 mt-2" href="./unfollowAction.jsp?otherUserNickname=<%= userNickname%>">Unfollow</a>
 <%
 		}
+	}
 	}
 %>
 		</div>
