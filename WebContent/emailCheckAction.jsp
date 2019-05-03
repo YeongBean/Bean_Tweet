@@ -13,6 +13,7 @@
 	}
 	
 	String userID = null;
+	
 	UserDAO userDAO = new UserDAO();
 	
 	if(session.getAttribute("userID") != null)
@@ -29,7 +30,9 @@
 		script.close();
 		return;
 	}
+	String userNickname = null;
 	String userEmail = userDAO.getUserEmail(userID);
+	userNickname = userDAO.getUsernickname(userID);
 	boolean isRight = (new SHA256().getSHA256(userEmail).equals(code)) ? true : false;
 	
 	if(isRight == true)

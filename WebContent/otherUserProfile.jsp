@@ -33,7 +33,7 @@
 	String tweetMood = "All";
 	String searchType = "Current";
 	String search = "";
-	String userNickname = null;
+	String otherUserNickname = null;
 	int pagenum = 0;
 	if(request.getParameter("tweetMood") != null){
 		tweetMood = request.getParameter("tweetMood");
@@ -45,7 +45,7 @@
 		search = request.getParameter("search");
 	}
 	if(request.getParameter("otherUserNickname") != null){
-		userNickname = request.getParameter("otherUserNickname");
+		otherUserNickname = request.getParameter("otherUserNickname");
 	}	
 	if(request.getParameter("pagenum") != null){
 		try{
@@ -56,11 +56,11 @@
 	}
 	
 	String userID = null;
-	String myuserNickname = null;
+	String userNickname = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String)session.getAttribute("userID");
-		myuserNickname = (String)session.getAttribute("userNickname");
+		userNickname = (String)session.getAttribute("userNickname");
 		
 	}
 	if(userID == null)
@@ -121,14 +121,17 @@
 				</li>								
 			</ul>
 			<div>
-				<%= myuserNickname %>
+				<%= userNickname %>
 			</div>
 		</div>
 	</nav>
-	<div class="col-12 text-center mt-3"><font size="18px"><%= userNickname%>'s page</font></div>
+	<div class="col-12 text-center mt-3"><font size="18px"><%= otherUserNickname%>'s page</font></div>
 	<section class="container">
 		<div class="row">
-		<form method="get" action="./profile.jsp" class="form-inline">
+		<form method="get" action="./otherUserProfile.jsp" class="form-inline">
+			<select name="otherUserNickname" class="form-control mx-1 mt-2">
+				<option value= <%= otherUserNickname%>></option>
+			</select>
 			<select name="tweetMood" class="form-control mx-1 mt-2">
 				<option value="All">All</option>
 				<option value="Happy" <% if(tweetMood.equals("Happy")) out.println("selected"); %>>Happy</option>
@@ -146,24 +149,24 @@
 <%
 	ArrayList<FollowDTO> followerList = new ArrayList<FollowDTO>();
 	FollowDAO followDAOs = new FollowDAO();
-	followerList = followDAOs.getMyFollower(userNickname);
+	followerList = followDAOs.getMyFollower(otherUserNickname);
 	boolean followed = false;
 	FollowDTO follower = new FollowDTO();
-	if(userNickname.equals(myuserNickname) == false){
+	if(userNickname.equals(otherUserNickname) == false){
 	if(followerList != null){
 		for(int i = 0; i < followerList.size(); i++){
 			follower = followerList.get(i);
-			if(myuserNickname.equals(follower.getFollowFrom()))
+			if(userNickname.equals(follower.getFollowFrom()))
 				followed = true;
 		}
 		if(followed != true){
 %>
-		<a class="btn btn-secondary mx-1 mt-2" href="./followAction.jsp?otherUserNickname=<%= userNickname%>">Follow</a>
+		<a class="btn btn-secondary mx-1 mt-2" href="./followAction.jsp?otherUserNickname=<%= otherUserNickname%>">Follow</a>
 		
 <%
 		}else{
 %>
-		<a class="btn btn-secondary mx-1 mt-2" href="./unfollowAction.jsp?otherUserNickname=<%= userNickname%>">Unfollow</a>
+		<a class="btn btn-secondary mx-1 mt-2" href="./unfollowAction.jsp?otherUserNickname=<%= otherUserNickname%>">Unfollow</a>
 <%
 		}
 	}
@@ -177,7 +180,7 @@
 <%		
 	ArrayList<TweetDTO> tweetList = new ArrayList<TweetDTO>();
 	TweetDAO tweetDAOs = new TweetDAO();
-	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, userNickname);
+	tweetList = tweetDAOs.getMyList(tweetMood, searchType, search, otherUserNickname);
 	
 	ArrayList<FollowDTO> IsFollowList = new ArrayList<FollowDTO>();
 	FollowDAO followDAO = new FollowDAO();
@@ -191,7 +194,7 @@
 			if(IsFollowList != null){
 				for(int j = 0; j < IsFollowList.size(); j++){
 					followDTO = IsFollowList.get(j);
-					if((followDTO.getFollowFrom().equals(myuserNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
+					if((followDTO.getFollowFrom().equals(userNickname)) && (tweet.getTweetScope().equals("ToFollower"))){
 						CanISee = true;
 						break;
 					}
@@ -223,7 +226,7 @@
 				</div>
 				<div class="col-3 text-right">					
 <%
-	if(tweet.getUserID().equals(userNickname))
+	if(tweet.getUserID().equals(otherUserNickname))
 	{
 %>			
 					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweet.getTweetIndex() %>">Delete</a>
@@ -272,7 +275,7 @@
 <%		
 	ArrayList<FollowDTO> followingList = new ArrayList<FollowDTO>();
 	FollowDAO followDAOss = new FollowDAO();
-	followingList = followDAOss.getMyFollowing(userNickname);
+	followingList = followDAOss.getMyFollowing(otherUserNickname);
 	if(followingList != null)
 		for(int i = 0; i < followingList.size(); i++){
 			FollowDTO following = followingList.get(i);

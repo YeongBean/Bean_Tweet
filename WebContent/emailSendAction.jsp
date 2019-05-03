@@ -16,9 +16,11 @@
 
 	UserDAO userDAO = new UserDAO();
 	String userID = null;
+	String userNickname = null;
 	if(session.getAttribute("userID") != null)
 	{
 		userID = (String)session.getAttribute("userID");
+		userNickname = (String)session.getAttribute("userNickname");
 	}
 	if(userID == null)
 	{

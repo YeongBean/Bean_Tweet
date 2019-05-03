@@ -10,7 +10,7 @@ import util.DatabaseUtil;
 public class TweetDAO {
 	public int write(TweetDTO tweetDTO)
 	{
-		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,?,0,0)";
+		String SQL = "INSERT INTO TWEETS VALUES (NULL,?,?,?,?,?,9,0)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -142,7 +142,6 @@
 					&nbsp&nbsp&nbsp&nbsp<a>Comment: <%= commentCount%></a>
 				</div>
 				<div class="col-3 text-right">					
-					<a onclick="return confirm('Really want to delete?')" href="./deleteAction.jsp?tweetID=<%= tweetIndex %>">Delete</a>
 					&nbsp&nbsp&nbsp&nbsp<a onclick="return confirm('Like this tweet?')" href="./likeAction.jsp?tweetID=<%= tweetIndex %>">Like</a>
 				</div>
 			</div>

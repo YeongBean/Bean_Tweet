@@ -123,7 +123,10 @@
 	</nav>
 	<div class="col-12 text-center mt-3"><font size="18px"><%= userNickname%>'s page</font></div>
 	<section class="container">
+	<div class="row">
 		<form method="get" action="./profile.jsp" class="form-inline">
+			<select class="form-control mx-1 mt-2">
+			</select>
 			<select name="tweetMood" class="form-control mx-1 mt-2">
 				<option value="All">All</option>
 				<option value="Happy" <% if(tweetMood.equals("Happy")) out.println("selected"); %>>Happy</option>
@@ -140,7 +143,7 @@
 		</form>
 		
 		
-		
+		</div>
 		<div class="row">
 		<div class="col-8">
 <%		
